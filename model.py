@@ -62,8 +62,16 @@ def build_vocabulary(word_counts: dict, max_size: int) -> dict:
     # Keep top max_size words and assign zero-based indices
     return {word: i for i, (word, _) in enumerate(sorted_words[:max_size])}
 
-# Step 7 - tokens_to_bow (not yet solved)
-# TODO: implement
+# Step 7 - tokens_to_bow
+def tokens_to_bow(tokens: list, vocab: dict) -> np.ndarray:
+    # TODO: Convert one document's token list into a bag-of-words count vector...
+    V = len(vocab)
+    bow = np.zeros(V, dtype=float)
+    for token in tokens:
+        if token in vocab:
+            idx = vocab[token]
+            bow[idx] += 1
+    return bow
 
 # Step 8 - corpus_to_bow_matrix (not yet solved)
 # TODO: implement
