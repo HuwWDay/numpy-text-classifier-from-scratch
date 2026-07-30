@@ -297,6 +297,14 @@ def predict_text(text: str, vocab: dict, idf: np.ndarray, w: np.ndarray, b: floa
     predict = predict_labels(proba, threshold)
     return int(predict[0])
 
-# Step 27 - collect_prediction_errors (not yet solved)
-# TODO: implement
+# Step 27 - collect_prediction_errors
+def collect_prediction_errors(texts: list, y_true: np.ndarray, y_pred: np.ndarray) -> dict:
+    # TODO: Gather raw messages that are false positives vs false negatives...
+    FP, FN = [], []
+    for i in range(len(texts)):
+        if y_pred[i] == 1 and y_true[i] == 0:
+            FP.append(texts[i])
+        elif y_pred[i] == 0 and y_true[i] == 1:
+            FN.append(texts[i])
+    return {"false_positives": FP, "false_negatives":FN}
 
