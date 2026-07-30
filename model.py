@@ -110,8 +110,26 @@ def fit_tfidf(bow_train: np.ndarray) -> np.ndarray:
     n_docs = bow_train.shape[0]
     return compute_idf(df, n_docs)
 
-# Step 13 - sigmoid (not yet solved)
-# TODO: implement
+# Step 13 - sigmoid
+import numpy as np
+
+def sigmoid(z: np.ndarray) -> np.ndarray:
+    # Convert input to float array
+    z = np.asarray(z, dtype=float)
+    out = np.empty_like(z)
+    
+    # Split into positive and negative branches to avoid overflow (exp(large_positive))
+    positive = z >= 0
+    negative = ~positive
+    
+    # Positive branch: 1 / (1 + exp(-z))
+    out[positive] = 1.0 / (1.0 + np.exp(-z[positive]))
+    
+    # Negative branch: exp(z) / (1 + exp(z))
+    exp_z = np.exp(z[negative])
+    out[negative] = exp_z / (1.0 + exp_z)
+    
+    return out
 
 # Step 14 - logistic_predict_proba (not yet solved)
 # TODO: implement
